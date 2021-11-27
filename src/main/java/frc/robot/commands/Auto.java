@@ -22,6 +22,6 @@ public class Auto extends ParallelCommandGroup {
   public Auto(DriveBase driveBase, Sucker sucker, Shooter shooter) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new Suck(sucker, Speed.SUCK_SPEED).withTimeout(Time.EXECUTION_PADDING), new DriveStraight(driveBase, Speed.DRIVE_SPEED).withTimeout(Time.EXECUTION_PADDING));
+    addCommands(new Suck(sucker, Speed.SUCK_SPEED), new DriveStraight(driveBase, Speed.DRIVE_SPEED));
   }
 }
