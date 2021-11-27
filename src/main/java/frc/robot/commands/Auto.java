@@ -12,7 +12,6 @@ import frc.robot.subsystems.*;
 
 // User code
 import static frc.robot.Constants.Speed;
-import static frc.robot.Constants.Time;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:

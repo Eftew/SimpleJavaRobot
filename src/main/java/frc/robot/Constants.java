@@ -29,10 +29,6 @@ public final class Constants {
     public static final double SHOOT_SPEED = 2;
   }
 
-  public static final class Time {
-    public static final double EXECUTION_PADDING = 0.1;
-  }
-
   public static final class Button {
     public static final int DRIVE_STRAIGHT = 8;
     public static final int SUCK = 9;
