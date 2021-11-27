@@ -4,28 +4,31 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
+// WPILib libraries
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** An example command that uses an example subsystem. */
-public class ExampleCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ExampleSubsystem m_subsystem;
+// Subsystems
+import frc.robot.subsystems.Sucker;
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public ExampleCommand(ExampleSubsystem subsystem) {
-    m_subsystem = subsystem;
+public class Suck extends CommandBase {
+  // Command variables
+  private Sucker m_sucker;
+  private double m_speed;
+
+  /** Creates a new Suck. */
+  public Suck(Sucker sucker, double speed) {
+    m_sucker = sucker;
+    m_speed = speed;
+
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(sucker);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_sucker.suck(m_speed);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -33,7 +36,9 @@ public class ExampleCommand extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_sucker.release();
+  }
 
   // Returns true when the command should end.
   @Override

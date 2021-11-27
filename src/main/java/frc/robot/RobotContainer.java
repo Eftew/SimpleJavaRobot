@@ -4,11 +4,20 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+// WPILib libraries
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+// Subsystems
+import frc.robot.subsystems.*;
+
+// Commands
+import frc.robot.commands.*;
+
+// User code
+import static frc.robot.Constants.DeviceID;
+import static frc.robot.Constants.Speed;
+import static frc.robot.Constants.Button;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -17,10 +26,19 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  // Joysticks
+  private static Joystick m_stick = new Joystick(DeviceID.DRIVE_STICK_PORT);
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  // Subsystems
+  private DriveBase m_driveBase = new DriveBase();
+  private Sucker m_sucker = new Sucker();
+  private Shooter m_shooter = new Shooter();
+
+  // Commands
+  private DriveStraight m_driveStraight = new DriveStraight(m_driveBase, Speed.DRIVE_SPEED);
+  private Suck m_suck = new Suck(m_sucker, Speed.SUCK_SPEED);
+  private Shoot m_shoot = new Shoot(m_shooter, Speed.SHOOT_SPEED);
+  private Auto m_auto = new Auto(m_driveBase, m_sucker, m_shooter);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -34,7 +52,11 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    new JoystickButton(m_stick, Button.DRIVE_STRAIGHT).whenActive(m_driveStraight);
+    new JoystickButton(m_stick, Button.SUCK).whenActive(m_suck);
+    new JoystickButton(m_stick, Button.SHOOT).whenActive(m_shoot);
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -42,7 +64,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return m_auto;
   }
 }
